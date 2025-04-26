@@ -20,7 +20,7 @@
 =====================================================================
 =====================================================================
 
-]]
+--]]
 
 require 'custom.keymaps'
 
@@ -377,6 +377,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sp', builtin.find_files, { desc = '[S]earch Files. // use (P) to mimic vscode' })
+      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files using vscode like keymap' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       -- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [ddW]ord' })
       -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -390,6 +391,7 @@ require('lazy').setup({
         builtin.grep_string { search = text }
       end, { desc = '[S]earch selected [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<C-f>', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       -- Add visual mode version for live_grep
       vim.keymap.set('v', '<leader>sg', function()
         local text = vim.getVisualSelection()
