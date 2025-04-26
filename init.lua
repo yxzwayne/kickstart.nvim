@@ -359,14 +359,42 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
 
+      function vim.getVisualSelection()
+        vim.cmd 'noau normal! "vy"'
+        local text = vim.fn.getreg 'v'
+        vim.fn.setreg('v', {})
+
+        text = string.gsub(text, '\n', '')
+        if #text > 0 then
+          return text
+        else
+          return ''
+        end
+      end
+
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sp', builtin.find_files, { desc = '[S]earch Files. // use (P) to mimic vscode' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+      -- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [ddW]ord' })
+      -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      -- Modify the grep_string keymap to use the word under cursor explicitly
+      vim.keymap.set('n', '<leader>sw', function()
+        builtin.grep_string { search = vim.fn.expand '<cword>' }
+      end, { desc = '[S]earch current [W]ord' })
+      -- Add a visual mode version for searching selected text
+      vim.keymap.set('v', '<leader>sw', function()
+        local text = vim.getVisualSelection()
+        builtin.grep_string { search = text }
+      end, { desc = '[S]earch selected [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      -- Add visual mode version for live_grep
+      vim.keymap.set('v', '<leader>sg', function()
+        local text = vim.getVisualSelection()
+        builtin.live_grep { default_text = text }
+      end, { desc = '[S]earch selected text by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -380,6 +408,15 @@ require('lazy').setup({
           previewer = false,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
+
+      vim.keymap.set('v', '<leader>/', function()
+        local text = vim.getVisualSelection()
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = false,
+          default_text = text,
+        })
+      end, { desc = 'Fuzzily search selection in current buffer' })
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
