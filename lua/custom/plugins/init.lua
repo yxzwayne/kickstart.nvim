@@ -21,6 +21,11 @@ return {
         update_focused_file = {
           enable = true,
         },
+        actions = {
+          open_file = {
+            quit_on_open = false,
+          },
+        },
       }
 
       -- nvim-tree keymaps
@@ -35,5 +40,13 @@ return {
     opts = {
       -- add any options here
     },
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('bufferline').setup {}
+    end,
   },
 }

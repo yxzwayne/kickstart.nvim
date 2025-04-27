@@ -1,3 +1,22 @@
+# yxzwayne fork of kickstartm.nvim
+
+## Setup
+
+```bash
+rm -rf ~/.config/nvim
+git clone git@github.com:yxzwayne/kickstart.nvim.git ~/.config/nvim
+```
+
+or when ssh is not available:
+
+```bash
+rm -rf ~/.config/nvim
+git clone https://github.com/yxzwayne/kickstart.nvim.git ~/.config/nvim
+```
+
+Note that I just won't be able to update it.
+
+
 # kickstart.nvim
 
 ## Introduction

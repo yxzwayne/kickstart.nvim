@@ -54,13 +54,13 @@ return {
       end,
       desc = 'Debug: Step Out',
     },
-    {
-      '<leader>b',
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      desc = 'Debug: Toggle Breakpoint',
-    },
+    -- {
+    --   '<leader>b',
+    --   function()
+    --     require('dap').toggle_breakpoint()
+    --   end,
+    --   desc = 'Debug: Toggle Breakpoint',
+    -- },
     {
       '<leader>B',
       function()
