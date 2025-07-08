@@ -28,11 +28,11 @@ return {
         },
       }
 
-      -- nvim-tree keymaps
-      vim.keymap.set('n', '<leader>tt', ':NvimTreeToggle<CR>')
-      vim.keymap.set('n', '<leader>te', ':NvimTreeFindFile<CR>')
-      vim.keymap.set('n', '<leader>tcol', ':NvimTreeCollapse<CR>')
-      vim.keymap.set('n', '<leader>tb', ':NvimTreeFocus<CR>')
+      -- nvim-tree keymaps (using capital T)
+      vim.keymap.set('n', '<leader>TT', ':NvimTreeToggle<CR>', { desc = 'Toggle [T]ree' })
+      vim.keymap.set('n', '<leader>Te', ':NvimTreeFindFile<CR>', { desc = '[T]ree find fil[e]' })
+      vim.keymap.set('n', '<leader>Tc', ':NvimTreeCollapse<CR>', { desc = '[T]ree [c]ollapse' })
+      vim.keymap.set('n', '<leader>Tb', ':NvimTreeFocus<CR>', { desc = '[T]ree focus ([b]ring to focus)' })
     end,
   },
   {
