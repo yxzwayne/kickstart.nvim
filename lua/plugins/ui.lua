@@ -60,6 +60,7 @@ return {
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>b', group = '[B]uffer' },
         { '<leader>g', group = '[G]it' },
+        { '<leader>G', group = '[G]lobal Operations' },
         { '<leader>x', group = 'Trouble/Diagnosti[x]' },
       },
     },
