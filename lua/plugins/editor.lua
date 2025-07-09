@@ -36,7 +36,8 @@ return {
   -- Telescope fuzzy finder
   {
     'nvim-telescope/telescope.nvim',
-    cmd = 'Telescope',
+    -- Remove cmd = 'Telescope' to load on startup
+    -- cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim',
       {

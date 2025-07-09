@@ -39,3 +39,8 @@ vim.keymap.set('n', 'zr', 'zr', { desc = 'Reduce folding by opening one more lev
 vim.keymap.set('n', 'zR', 'zR', { desc = 'Open all folds' })
 vim.keymap.set('n', 'zm', 'zm', { desc = 'Increase folding by closing one more level' })
 vim.keymap.set('n', 'zM', 'zM', { desc = 'Close all folds' })
+
+-- Ensure Telescope keybindings are loaded early
+-- These are duplicated from plugins/editor.lua to ensure they're available immediately
+vim.keymap.set('n', '<C-p>', function() require('telescope.builtin').find_files() end, { desc = 'Find files (Telescope)' })
+vim.keymap.set('n', '<C-f>', function() require('telescope.builtin').live_grep() end, { desc = 'Search by Grep (Telescope)' })
