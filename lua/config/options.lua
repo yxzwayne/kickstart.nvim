@@ -79,3 +79,11 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true
+
+-- Command line height (set to 0 for minimal UI)
+vim.opt.cmdheight = 0
+
+-- Status line settings
+vim.opt.laststatus = 2  -- Always show status line
+vim.opt.showcmd = false -- Don't show command in status line
+vim.opt.showtabline = 1 -- Only show tabline when there are at least 2 tabs
