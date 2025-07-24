@@ -10,27 +10,14 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       'saghen/blink.cmp',
+      'mfussenegger/nvim-jdtls',
     },
     config = function()
       -- LSP attach function
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          local map = function(keys, func, desc, mode)
-            mode = mode or 'n'
-            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
-
-          -- LSP keymaps
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
-          map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-          map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gO', require('telescope.builtin').lsp_document_symbols, 'Open Document Symbols')
-          map('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
-          map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
+          -- LSP keymaps removed - will be configured manually later
 
           local function client_supports_method(client, method, bufnr)
             if vim.fn.has 'nvim-0.11' == 1 then
@@ -65,12 +52,7 @@ return {
             })
           end
 
-          -- Inlay hints toggle
-          if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
-          end
+          -- Inlay hints toggle removed - will be configured manually later
         end,
       })
 
@@ -161,18 +143,46 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       -- Setup servers
-      require('mason-lspconfig').setup {
+      require("mason-lspconfig").setup({
         ensure_installed = {},
         automatic_installation = false,
         automatic_enable = false,  -- Disable automatic enable to prevent version compatibility issues
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            require("lspconfig")[server_name].setup({
+              cmd = server.cmd,
+              settings = server.settings,
+              filetypes = server.filetypes,
+              capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {}),
+            })
+          end,
+          jdtls = function()
+            require("lspconfig").jdtls.setup({
+              on_attach = function()
+                local bemol_dir = vim.fs.find({ ".bemol" }, { upward = true, type = "directory" })[1]
+                local ws_folders_lsp = {}
+                if bemol_dir then
+                  local file = io.open(bemol_dir .. "/ws_root_folders", "r")
+                  if file then
+                    for line in file:lines() do
+                      table.insert(ws_folders_lsp, line)
+                    end
+                    file:close()
+                  end
+                end
+                for _, line in ipairs(ws_folders_lsp) do
+                  vim.lsp.buf.add_workspace_folder(line)
+                end
+              end,
+              cmd = {
+                "jdtls",
+                "--jvm-arg=-javaagent:" .. vim.fn.expand("$MASON/share/jdtls/lombok.jar"),
+              },
+            })
           end,
         },
-      }
+      })
     end,
   },
 
