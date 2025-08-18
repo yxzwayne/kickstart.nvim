@@ -17,7 +17,36 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- LSP keymaps removed - will be configured manually later
+          -- LSP keymaps using gt prefix (go to...)
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
+
+          -- Core navigation
+          map('gtd', vim.lsp.buf.definition, '[G]o [T]o [D]efinition')
+          map('gtD', vim.lsp.buf.declaration, '[G]o [T]o [D]eclaration')
+          map('gtr', vim.lsp.buf.references, '[G]o [T]o [R]eferences')
+          map('gti', vim.lsp.buf.implementation, '[G]o [T]o [I]mplementation')
+          map('gtt', vim.lsp.buf.type_definition, '[G]o [T]o [T]ype definition')
+
+          -- Information/Help
+          map('gth', vim.lsp.buf.hover, '[G]o [T]o [H]over documentation')
+          map('gts', vim.lsp.buf.signature_help, '[G]o [T]o [S]ignature help')
+
+          -- Actions
+          map('gta', vim.lsp.buf.code_action, '[G]o [T]o code [A]ctions', { 'n', 'x' })
+          map('gtn', vim.lsp.buf.rename, '[G]o [T]o re[N]ame symbol')
+          map('gtf', function() vim.lsp.buf.format { async = true } end, '[G]o [T]o [F]ormat document')
+
+          -- Workspace
+          map('gtw', vim.lsp.buf.workspace_symbol, '[G]o [T]o [W]orkspace symbols')
+          map('gtS', vim.lsp.buf.document_symbol, '[G]o [T]o document [S]ymbols')
+
+          -- Diagnostics navigation
+          map('gt]', vim.diagnostic.goto_next, '[G]o [T]o next diagnostic')
+          map('gt[', vim.diagnostic.goto_prev, '[G]o [T]o previous diagnostic')
+          map('gtk', vim.diagnostic.open_float, '[G]o [T]o diagnostic (show in float)')
 
           local function client_supports_method(client, method, bufnr)
             if vim.fn.has 'nvim-0.11' == 1 then
