@@ -161,7 +161,7 @@ return {
             },
           },
         },
-        jdtls = {},
+        -- jdtls is handled separately in the mason-lspconfig handlers below
       }
 
       -- Ensure installed
@@ -187,27 +187,32 @@ return {
             })
           end,
           jdtls = function()
-            require("lspconfig").jdtls.setup({
-              on_attach = function()
-                local bemol_dir = vim.fs.find({ ".bemol" }, { upward = true, type = "directory" })[1]
-                local ws_folders_lsp = {}
-                if bemol_dir then
-                  local file = io.open(bemol_dir .. "/ws_root_folders", "r")
-                  if file then
-                    for line in file:lines() do
-                      table.insert(ws_folders_lsp, line)
-                    end
-                    file:close()
-                  end
-                end
-                for _, line in ipairs(ws_folders_lsp) do
+            -- Bemol-compatible nvim-jdtls configuration
+            local cmd = { vim.fn.exepath("jdtls") }
+            
+            -- Add lombok support if Mason is available
+            local mason_registry = require("mason-registry")
+            if mason_registry.is_installed("jdtls") then
+              local lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "/lombok.jar"
+              table.insert(cmd, string.format("--jvm-arg=-javaagent:%s", lombok_jar))
+            end
+
+            local root_dir = require("jdtls.setup").find_root({ "packageInfo" }, "Config")
+
+            if root_dir then
+              local file = io.open(root_dir .. "/.bemol/ws_root_folders")
+              if file then
+                for line in file:lines() do
                   vim.lsp.buf.add_workspace_folder(line)
                 end
-              end,
-              cmd = {
-                "jdtls",
-                "--jvm-arg=-javaagent:" .. vim.fn.expand("$MASON/share/jdtls/lombok.jar"),
-              },
+                file:close()
+              end
+            end
+
+            require("lspconfig").jdtls.setup({
+              cmd = cmd,
+              root_dir = root_dir,
+              capabilities = capabilities,
             })
           end,
         },

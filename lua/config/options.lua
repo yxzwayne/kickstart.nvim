@@ -42,9 +42,6 @@ vim.opt.smartcase = true
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
--- Decrease update time
-vim.opt.updatetime = 250
-
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 300
 
@@ -90,3 +87,13 @@ vim.opt.cmdheight = 0
 vim.opt.laststatus = 2  -- Always show status line
 vim.opt.showcmd = false -- Don't show command in status line
 vim.opt.showtabline = 1 -- Only show tabline when there are at least 2 tabs
+
+-- From Amazon mmuldo doc
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+vim.opt.termguicolors = true
+vim.opt.scrolloff = 8
+vim.opt.colorcolumn = "80"
+vim.opt.isfname:append("@-@")
+vim.opt.updatetime = 50

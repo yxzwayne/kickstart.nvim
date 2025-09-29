@@ -193,17 +193,4 @@ return {
     'numToStr/Comment.nvim',
     opts = {},
   },
-
-  -- Q CLI integration
-  {
-    'sriram-mv/q-cli-neovim',
-    config = function()
-      require('q-cli-neovim').setup()
-      
-      -- Set your preferred keymaps
-      vim.keymap.set('n', '<leader>Tq', '<cmd>QToggle<cr>', { desc = 'Toggle Q CLI' })
-      vim.keymap.set('n', '<leader>qD', '<cmd>QDebug<cr>', { desc = 'Debug Q CLI session' })
-      vim.keymap.set('n', '<leader>qc', '<cmd>QCleanup<cr>', { desc = 'Clean up Q CLI sessions' })
-    end,
-  },
 }
