@@ -3,6 +3,15 @@
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Centered scrolling and search navigation
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down + center' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up + center' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result + center + open folds' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result + center + open folds' })
+
+-- Disable Ex mode
+vim.keymap.set("n", "Q", "<nop>")
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -16,10 +25,10 @@ vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Window navigation
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
 -- Buffer navigation keymaps (using <leader>b prefix)
 vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { desc = '[B]uffer [N]ext', noremap = true, silent = true })

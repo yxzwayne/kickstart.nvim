@@ -13,14 +13,14 @@ return {
   --     vim.cmd.colorscheme 'catppuccin'
   --   end,
   -- },
-  {
-    'kepano/flexoki-neovim',
-    name = 'flexoki',
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'flexoki'
-    end,
-  },
+  -- {
+  --   'kepano/flexoki-neovim',
+  --   name = 'flexoki',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'flexoki'
+  --   end,
+  -- },
 
   -- Which-key
   {

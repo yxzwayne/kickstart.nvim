@@ -13,6 +13,7 @@ return {
     },
     config = function()
       require('nvim-tree').setup {
+        sync_root_with_cwd = true,
         view = {
           side = 'right',
           width = 50,
@@ -20,15 +21,27 @@ return {
         },
         update_focused_file = {
           enable = true,
+          update_root = false,
+        },
+        renderer = {
+          group_empty = true,
         },
         actions = {
           open_file = {
             quit_on_open = false,
+            eject = false,
           },
         },
       }
 
-      -- nvim-tree keymaps (using lowercase t)
+      local api = require('nvim-tree.api')
+
+      -- Updated keymaps with the new toggle function
+      vim.keymap.set('n', '<leader>e', function()
+        api.tree.toggle({ focus = true })
+      end, { desc = 'Explorer (toggle, pinned root)' })
+      
+      -- Keep existing keymaps for compatibility
       vim.keymap.set('n', '<leader>tt', ':NvimTreeToggle<CR>', { desc = 'Toggle [t]ree' })
       vim.keymap.set('n', '<leader>te', ':NvimTreeFindFile<CR>', { desc = '[t]ree find fil[e]' })
       vim.keymap.set('n', '<leader>tc', ':NvimTreeCollapse<CR>', { desc = '[t]ree [c]ollapse' })
