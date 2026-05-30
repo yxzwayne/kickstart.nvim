@@ -60,18 +60,18 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor
-vim.opt.scrolloff = 20
+vim.opt.scrolloff = 8
 
 -- Raise a dialog for unsaved changes
 vim.opt.confirm = true
 
 -- Tab and indentation settings
-vim.opt.tabstop = 2        -- Number of spaces that a <Tab> in the file counts for
-vim.opt.shiftwidth = 2     -- Number of spaces to use for each step of (auto)indent
-vim.opt.softtabstop = 2    -- Number of spaces that a <Tab> counts for while editing
-vim.opt.expandtab = true   -- Use spaces instead of tabs
+vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
+vim.opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
+vim.opt.softtabstop = 2 -- Number of spaces that a <Tab> counts for while editing
+vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.smartindent = true -- Smart autoindenting when starting a new line
-vim.opt.autoindent = true  -- Copy indent from current line when starting a new line
+vim.opt.autoindent = true -- Copy indent from current line when starting a new line
 
 -- Folding configuration
 vim.opt.foldmethod = 'expr'
@@ -84,7 +84,7 @@ vim.opt.foldenable = true
 vim.opt.cmdheight = 0
 
 -- Status line settings
-vim.opt.laststatus = 2  -- Always show status line
+vim.opt.laststatus = 2 -- Always show status line
 vim.opt.showcmd = false -- Don't show command in status line
 vim.opt.showtabline = 1 -- Only show tabline when there are at least 2 tabs
 
@@ -93,6 +93,6 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
-vim.opt.scrolloff = 8
-vim.opt.isfname:append("@-@")
+vim.opt.colorcolumn = '80'
+vim.opt.isfname:append '@-@'
 vim.opt.updatetime = 50

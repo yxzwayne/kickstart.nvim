@@ -34,25 +34,19 @@ return {
         },
       }
 
-      local api = require('nvim-tree.api')
+      local api = require 'nvim-tree.api'
 
       -- Updated keymaps with the new toggle function
       vim.keymap.set('n', '<leader>e', function()
-        api.tree.toggle({ focus = true })
+        api.tree.toggle { focus = true }
       end, { desc = 'Explorer (toggle, pinned root)' })
-      
+
       -- Keep existing keymaps for compatibility
       vim.keymap.set('n', '<leader>tt', ':NvimTreeToggle<CR>', { desc = 'Toggle [t]ree' })
       vim.keymap.set('n', '<leader>te', ':NvimTreeFindFile<CR>', { desc = '[t]ree find fil[e]' })
       vim.keymap.set('n', '<leader>tc', ':NvimTreeCollapse<CR>', { desc = '[t]ree [c]ollapse' })
       vim.keymap.set('n', '<leader>tb', ':NvimTreeFocus<CR>', { desc = '[t]ree focus ([b]ring to focus)' })
     end,
-  },
-  {
-    'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
   },
   {
     'akinsho/bufferline.nvim',
