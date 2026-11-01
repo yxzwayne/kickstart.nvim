@@ -10,7 +10,7 @@ vim.g.have_nerd_font = true
 -- Disable Python 3 provider (speeds up startup)
 vim.g.loaded_python3_provider = 0
 
--- Disable netrw
+-- Use mini.files as the directory browser instead of netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 

@@ -2,10 +2,12 @@
 
 ## Current Status
 
+Leader is **Space**. Unless stated otherwise, shortcuts below are used in Normal mode.
+
 - LSP setup is disabled.
 - Completion remains enabled through `blink.cmp` with path, snippet, and lazydev sources.
 - Formatting remains manual through Conform.
-- Diagnostics UI remains available through Trouble, but no LSP servers are configured here.
+- Diagnostics UI remains available through Trouble, but no LSP servers or linters are configured here. Symbols need an LSP server.
 
 ## Core Navigation
 
@@ -28,10 +30,10 @@
 
 ### Telescope
 
+- `<C-p>` - Find files with fuzzy filename search
 - `<leader>sh` - Search help tags
 - `<leader>sk` - Search keymaps
 - `<leader>sp` - Search files
-- `<C-p>` - Find files
 - `<leader>ss` - Search Telescope builtins
 - `<leader>sw` - Search current word or selected text
 - `<leader>sg` - Live grep
@@ -43,12 +45,18 @@
 - `<leader>s/` - Search open files
 - `<leader>sn` - Search Neovim config files
 
-### Nvim-tree
+### Mini.files
 
-- `<leader>tt` - Toggle file tree
-- `<leader>te` - Find current file in tree
-- `<leader>tc` - Collapse tree
-- `<leader>tb` - Focus tree window
+- `<leader>e` - Toggle explorer at the current file (cwd for unnamed/special buffers)
+- `h` / `l` - Navigate to parent / open directory or file
+- `L` - Open file and close explorer
+- `q` - Close explorer
+- `g?` - Show explorer help
+- Edit entries with normal Vim commands to create, rename, move, or delete; `=` reviews and applies changes
+
+### Mini.clue
+
+- Key hints appear after 300 ms for leader mappings, `g`, `z`, `<C-w>`, `[` and `]`.
 
 ### Flash.nvim
 
@@ -63,7 +71,7 @@
 - `<Esc>` - Clear search highlights
 - `<Esc><Esc>` - Exit terminal mode
 - `<A-S-C>` - Copy absolute file path to clipboard
-- `gd` - Built-in go to definition
+- `gd` - Built-in local declaration search (no LSP)
 - `dd` - Delete line without copying
 - `<leader>dd` - Original `dd` behavior
 - Arrow keys in normal mode - Show a reminder to use `hjkl`
@@ -90,11 +98,11 @@
 
 ### Formatting
 
-- `<leader>GF` - Format buffer with Conform
+- `<leader>GF` - Format buffer with Conform (Lua via `stylua`; executable must be installed)
 
 ## Diagnostics
 
-- `<leader>q` - Open diagnostic quickfix list
+- `<leader>q` - Open diagnostic location list
 - `<leader>xx` - Toggle diagnostics in Trouble
 - `<leader>xX` - Toggle buffer diagnostics in Trouble
 - `<leader>xs` - Toggle symbols in Trouble
@@ -143,10 +151,10 @@
 ## Active Plugin Groups
 
 - Core: `vim-sleuth`, `todo-comments.nvim`
-- UI: `catppuccin`, `which-key.nvim`, `trouble.nvim`, `bufferline.nvim`
-- Editing: `mini.nvim`, `Comment.nvim`, `nvim-autopairs`
+- UI: built-in default colorscheme, `mini.clue`, `mini.statusline`, `trouble.nvim`, `bufferline.nvim`
+- Editing: `mini.ai`, `mini.surround`, `mini.pairs` (part of `mini.nvim`), `Comment.nvim`
 - Search/navigation: `telescope.nvim`, `telescope-fzf-native.nvim`, `flash.nvim`
-- Files: `nvim-tree.lua`
+- Files: `mini.files` (part of `mini.nvim`)
 - Git: `gitsigns.nvim`, `lazygit.nvim`
 - Completion/snippets: `blink.cmp`, `LuaSnip`, `lazydev.nvim`
 - Formatting/linting: `conform.nvim`, `nvim-lint`

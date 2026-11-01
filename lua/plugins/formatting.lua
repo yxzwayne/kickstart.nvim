@@ -1,7 +1,7 @@
 -- Formatting and Lua-development helpers.
 
 return {
-  -- Autoformat
+  -- Manual formatting
   {
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },

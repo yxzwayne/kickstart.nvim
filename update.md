@@ -1,4 +1,7 @@
 # Update History
+
+These entries describe earlier configurations. See [README.md](README.md) and
+[plugins_and_keys.md](plugins_and_keys.md) for the current setup.
 ## 2025-07-08 Tuesday
 ### Major Refactoring and Feature Additions
 **Structural Changes:**

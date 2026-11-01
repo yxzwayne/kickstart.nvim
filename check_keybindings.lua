@@ -59,5 +59,5 @@ end
 -- Check for terminal key capture
 print '\nTerminal key capture check:'
 print 'Note: Some terminals might capture <C-p> and <C-f> before they reach Neovim.'
-print 'Try using the leader-based keybindings instead (<leader>sp and <leader>sg)'
+print 'Try using the leader-based keybindings instead (<leader>sp for file search and <leader>sg for grep)'
 print 'or check your terminal settings.'

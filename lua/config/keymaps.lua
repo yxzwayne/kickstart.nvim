@@ -13,7 +13,7 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result + center + op
 vim.keymap.set('n', 'Q', '<nop>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic location list' })
 
 -- Exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -52,15 +52,6 @@ vim.keymap.set('n', 'zM', 'zM', { desc = 'Close all folds' })
 vim.keymap.set('n', '<A-S-C>', function()
   vim.fn.setreg('+', vim.fn.expand '%:p')
 end, { desc = 'Copy absolute file path to clipboard' })
-
--- Ensure Telescope keybindings are loaded early
--- These are duplicated from plugins/editor.lua to ensure they're available immediately
-vim.keymap.set('n', '<C-p>', function()
-  require('telescope.builtin').find_files()
-end, { desc = 'Find files (Telescope)' })
-vim.keymap.set('n', '<C-f>', function()
-  require('telescope.builtin').live_grep()
-end, { desc = 'Search by Grep (Telescope)' })
 
 -- Delete without copying keymaps
 vim.keymap.set('n', '<leader>dd', 'dd', { noremap = true, desc = 'Delete line (original dd behavior)' })

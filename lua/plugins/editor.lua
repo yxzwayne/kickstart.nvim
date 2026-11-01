@@ -19,6 +19,47 @@ return {
   {
     'echasnovski/mini.nvim',
     config = function()
+      -- Browse from the current file, or cwd for unnamed/special buffers.
+      local files = require 'mini.files'
+      files.setup()
+      local function toggle_files()
+        if files.close() ~= nil then
+          return
+        end
+        local path = vim.api.nvim_buf_get_name(0)
+        path = vim.bo.buftype == '' and vim.uv.fs_stat(path) and path or vim.fn.getcwd()
+        files.open(path, false)
+      end
+      vim.keymap.set('n', '<leader>e', toggle_files, { desc = 'Toggle file explorer' })
+
+      require('mini.pairs').setup()
+
+      local clue = require 'mini.clue'
+      clue.setup {
+        triggers = {
+          { mode = { 'n', 'x' }, keys = '<Leader>' },
+          { mode = { 'n', 'x' }, keys = 'g' },
+          { mode = { 'n', 'x' }, keys = 'z' },
+          { mode = 'n', keys = '<C-w>' },
+          { mode = 'n', keys = '[' },
+          { mode = 'n', keys = ']' },
+        },
+        clues = {
+          { mode = { 'n', 'x' }, keys = '<Leader>s', desc = '+Search' },
+          { mode = { 'n', 'x' }, keys = '<Leader>h', desc = '+Git hunks' },
+          { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+          { mode = { 'n', 'x' }, keys = '<Leader>G', desc = '+Global operations' },
+          { mode = 'n', keys = '<Leader>T', desc = '+Toggle' },
+          { mode = 'n', keys = '<Leader>q', desc = '+Sessions / diagnostics' },
+          { mode = 'n', keys = '<Leader>x', desc = '+Trouble / diagnostics' },
+          clue.gen_clues.g(),
+          clue.gen_clues.z(),
+          clue.gen_clues.windows(),
+          clue.gen_clues.square_brackets(),
+        },
+        window = { delay = 300 },
+      }
+
       -- Better Around/Inside textobjects
       require('mini.ai').setup { n_lines = 500 }
       -- Add/delete/replace surroundings
@@ -36,8 +77,7 @@ return {
   -- Telescope fuzzy finder
   {
     'nvim-telescope/telescope.nvim',
-    -- Remove cmd = 'Telescope' to load on startup
-    -- cmd = 'Telescope',
+    -- Load at startup so search mappings are immediately available.
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
@@ -75,10 +115,10 @@ return {
 
       -- Keymaps
       local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files (Telescope)' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sp', builtin.find_files, { desc = '[S]earch Files. // use (P) to mimic vscode' })
-      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find files using vscode like keymap' })
+      vim.keymap.set('n', '<leader>sp', builtin.find_files, { desc = '[S]earch files (Ctrl-P)' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', function()
         builtin.grep_string { search = vim.fn.expand '<cword>' }
